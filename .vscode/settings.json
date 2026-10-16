@@ -1,0 +1,46 @@
+{
+  "tailwindCSS.experimental.configFile": "src/globals.css",
+  "editor.formatOnSave": true,
+  "js/ts.tsdk.path": "node_modules\\typescript\\lib",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "workbench.editor.customLabels.patterns": {
+    "**/{layout,page,loading,error}.tsx": "${dirname} > ${filename}"
+  },
+
+  // 1. Stop extensions from watching massive folders
+  "files.watcherExclude": {
+    "**/.turbo/**": true,
+    "**/dist/**": true,
+    "**/node_modules/**": true,
+    "**/.next/**": true,
+    "**/coverage/**": true,
+    "**/routeTree.gen.ts": true
+  },
+
+  // 2. Prevent search indexing from crawling build artifacts
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.turbo": true,
+    "**/.next": true,
+    "**/pnpm-lock.yaml": true,
+    "**/routeTree.gen.ts": true
+  },
+
+  // 3. Native "Auto Rename Tag"
+  "editor.linkedEditing": true,
+
+  // 4. Tailwind Optimizations
+  "tailwindCSS.emmetCompletions": false,
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "ts"
+  },
+
+  // 5. Limits TypeScript memory
+  "js/ts.tsserver.automaticTypeAcquisition.enabled": false,
+  "js/ts.tsserver.maxMemory": 2048,
+
+  "files.readonlyInclude": {
+    "**/routeTree.gen.ts": true
+  }
+}
