@@ -1,0 +1,230 @@
+table accounts {
+  id text [pk, not null]
+  account_id text [not null]
+  provider_id text [not null]
+  access_token text
+  refresh_token text
+  id_token text
+  access_token_expires_at integer
+  refresh_token_expires_at integer
+  scope text
+  password text
+  user_id text [not null]
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    (provider_id, account_id) [name: 'account_accountProvider_accountId_idx', unique]
+    user_id [name: 'account_userId_idx']
+  }
+}
+
+table addresses {
+  id text [pk, not null]
+  type text [not null, default: 'other']
+  street_line_1 text [not null]
+  street_line_2 text
+  city text [not null]
+  state text
+  zip_code text [not null]
+  country text [not null]
+  latitude numeric
+  longitude numeric
+  notes text
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+}
+
+table permissions {
+  id text [pk, not null]
+  level text [not null]
+  resource text [not null]
+  action text [not null]
+  description text
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    (level, resource, action) [name: 'permission_level_resource_action_key', unique]
+    level [name: 'permission_level_idx']
+    resource [name: 'permission_resource_idx']
+    action [name: 'permission_action_idx']
+  }
+}
+
+table role_permissions {
+  id text [pk, not null]
+  role_id text [not null]
+  permission_id text [not null]
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    (role_id, permission_id) [name: 'role_permission_unique', unique]
+    role_id [name: 'role_permission_role_idx']
+    permission_id [name: 'role_permission_permission_idx']
+  }
+}
+
+table roles {
+  id text [pk, not null]
+  role_name text [not null, default: 'USER']
+  description text
+
+  indexes {
+    role_name [name: 'role_name_unique', unique]
+  }
+}
+
+table sessions {
+  id text [pk, not null]
+  token text [not null]
+  ip_address text
+  user_agent text
+  impersonated_by text
+  user_id text [not null]
+  expires_at integer [not null]
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    token [name: 'session_token_idx', unique]
+    user_id [name: 'session_userId_idx']
+    expires_at [name: 'session_expiresAt_idx']
+  }
+}
+
+table user_devices {
+  id text [pk, not null]
+  user_id text [not null]
+  fingerprint text [not null]
+  browser text
+  os text
+  device_type text
+  first_seen_at integer [not null, default: `(unixepoch() * 1000)`]
+  last_seen_at integer [not null, default: `(unixepoch() * 1000)`]
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    (user_id, fingerprint) [name: 'user_device_user_fingerprint_idx', unique]
+    user_id [name: 'user_device_user_id_idx']
+  }
+}
+
+table user_events {
+  id text [pk, not null]
+  user_id text
+  email text
+  event text [not null]
+  session_id text
+  device_id text
+  ip_address text
+  user_agent text
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    user_id [name: 'user_event_user_id_idx']
+    event [name: 'user_event_event_idx']
+    created_at [name: 'user_event_created_at_idx']
+    session_id [name: 'user_event_session_id_idx']
+  }
+}
+
+table user_roles {
+  id text [pk, not null]
+  role_id text [not null]
+  user_id text [not null]
+  assigned_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    (user_id, role_id) [name: 'user_role_unique', unique]
+    role_id [name: 'user_role_role_id_idx']
+    user_id [name: 'user_role_user_id_idx']
+  }
+}
+
+table user_sessions {
+  id text [pk, not null]
+  user_id text [not null]
+  device_id text
+  session_id text [not null]
+  login_at integer [not null, default: `(unixepoch() * 1000)`]
+  last_seen_at integer [not null, default: `(unixepoch() * 1000)`]
+  logout_at integer
+  expires_at integer
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    
+    user_id [name: 'user_session_user_id_idx']
+    session_id [name: 'user_session_session_id_idx', unique]
+    login_at [name: 'user_session_login_at_idx']
+    last_seen_at [name: 'user_session_last_seen_at_idx']
+  }
+}
+
+table users {
+  id text [pk, not null]
+  name text [not null]
+  email text [not null]
+  email_verified integer [not null, default: 0]
+  image text
+  role text [not null]
+  banned integer [default: 0]
+  ban_reason text
+  ban_expires integer
+  timezone text [not null, default: 'UTC']
+  locale text [not null, default: 'en-US']
+  currency text [not null, default: 'USD']
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    email [name: 'user_email_key', unique]
+  }
+}
+
+table verifications {
+  id text [pk, not null]
+  identifier text [not null]
+  value text [not null]
+  expires_at integer [not null]
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+}
+
+ref: accounts.user_id > users.id
+
+ref: role_permissions.role_id > roles.id
+
+ref: role_permissions.permission_id > permissions.id
+
+ref: sessions.user_id > users.id
+
+ref: user_sessions.session_id - sessions.id
+
+ref: user_devices.user_id > users.id
+
+ref: user_events.user_id > users.id
+
+ref: user_events.device_id > user_devices.id
+
+ref: user_roles.role_id > roles.id
+
+ref: user_roles.user_id > users.id
+
+ref: user_sessions.user_id > users.id
+
+ref: user_sessions.device_id > user_devices.id
