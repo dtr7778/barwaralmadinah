@@ -1,6 +1,6 @@
 //  @ts-check
 
-import { tanstackConfig } from "@tanstack/eslint-config"
+import { tanstackConfig } from "@tanstack/eslint-config";
 
 export default [
   ...tanstackConfig,
@@ -16,6 +16,11 @@ export default [
     },
   },
   {
-    ignores: ["eslint.config.js", ".prettierrc"],
+    ignores: [
+      "eslint.config.js",
+      ".prettierrc",
+      ".opencode",
+      "worker-configuration.d.ts",
+    ],
   },
-]
+];
