@@ -1,0 +1,27 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "compatibility_date": "2025-10-16",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "barwazalmadinah-db-local",
+      "database_id": "1e6e9a4c-bd06-4df2-a95f-b0ccf689924b",
+      "migrations_dir": "migrations",
+      "remote": false,
+    },
+  ],
+  "env": {
+    "production": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "barwazalmadinah-db",
+          "database_id": "2bb760e1-bbb1-472d-a546-6da74d068b38",
+          "migrations_dir": "migrations",
+          "remote": true,
+        },
+      ],
+    },
+  },
+}

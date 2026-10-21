@@ -1,0 +1,34 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "web",
+  "compatibility_date": "2025-10-16",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  "observability": {
+    "enabled": true,
+  },
+  "upload_source_maps": true,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "barwazalmadinah-db-local",
+      "database_id": "1e6e9a4c-bd06-4df2-a95f-b0ccf689924b",
+      "remote": false,
+      "migrations_dir": "migrations",
+    },
+  ],
+  "env": {
+    "production": {
+      "name": "web",
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "barwazalmadinah-db",
+          "database_id": "2bb760e1-bbb1-472d-a546-6da74d068b38",
+          "remote": true,
+          "migrations_dir": "migrations",
+        },
+      ],
+    },
+  },
+}
