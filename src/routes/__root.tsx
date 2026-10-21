@@ -1,47 +1,41 @@
-import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router"
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
-import { TanStackDevtools } from "@tanstack/react-devtools"
+import { I18nProvider } from "@/i18n/i18n-provider";
+import { resolveDirLocale, resolveLocale } from "@/i18n/i18n.config";
+import { loadMessages } from "@/i18n/loadMessages";
+import { globalHead } from "@/lib/head";
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import {
+  createRootRouteWithContext,
+  HeadContent,
+  Scripts,
+} from "@tanstack/react-router";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import appCss from "../styles.css?url"
+interface RouteContext {}
 
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      {
-        charSet: "utf-8",
-      },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      {
-        title: "Barwaz Al Madinah",
-      },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-    ],
-  }),
-  notFoundComponent: () => (
-    <main className="container mx-auto p-4 pt-16">
-      <h1>404</h1>
-      <p>The requested page could not be found.</p>
-    </main>
-  ),
+export const Route = createRootRouteWithContext<RouteContext>()({
+  beforeLoad: async ({ location }) => {
+    const seg = location.pathname.split("/")[1];
+
+    const locale = resolveLocale(seg);
+
+    return { locale, messages: await loadMessages({ data: locale }) };
+  },
+  head: ({ match }) => globalHead(match.context.locale),
   shellComponent: RootDocument,
-})
+});
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const { locale, messages } = Route.useRouteContext();
+
   return (
-    <html lang="en">
+    <html lang={locale} dir={resolveDirLocale(locale)}>
       <head>
         <HeadContent />
       </head>
       <body>
-        {children}
+        <I18nProvider locale={locale} messages={messages}>
+          {children}
+        </I18nProvider>
         <TanStackDevtools
           config={{
             position: "bottom-right",
@@ -56,5 +50,5 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  )
+  );
 }
