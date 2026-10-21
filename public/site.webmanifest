@@ -1,0 +1,32 @@
+{
+  "name": "بروز المدينة",
+  "short_name": "بروز",
+  "description": "متجر البقالة الموثوق في العلا، السعودية. تسوق البقالة الطازجة أونلاين مع توصيل سريع، أو زُر متجرنا المحلي",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#F5EBDD",
+  "theme_color": "#5E381D",
+  "categories": ["shopping", "food", "business"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/maskable-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/maskable-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [],
+  "screenshots": []
+}

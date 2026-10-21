@@ -1,0 +1,32 @@
+{
+  "name": "Barwaz Al Madinah",
+  "short_name": "Barwaz",
+  "description": "Your trusted grocery shop in Al Ula, Saudi Arabia. Shop fresh groceries online with fast delivery or visit our local store.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#F5EBDD",
+  "theme_color": "#5E381D",
+  "categories": ["shopping", "food", "business"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icons/maskable-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/maskable-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [],
+  "screenshots": []
+}
